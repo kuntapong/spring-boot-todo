@@ -10,6 +10,7 @@ import com.example.todo.service.exception.TodoServiceNotfoundException;
 
 @RestControllerAdvice
 public class TodoControllerAdvice {
+	
 	@ExceptionHandler(TodoServiceNotfoundException.class)
 	public ResponseEntity<String> notFoundException(final TodoServiceNotfoundException e) {
 	    return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -24,6 +25,4 @@ public class TodoControllerAdvice {
 	public ResponseEntity<String> general(final Exception e) {
 	    return new ResponseEntity<String>("Something went wrong.", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
-	
 }

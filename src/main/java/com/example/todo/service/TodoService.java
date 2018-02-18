@@ -18,11 +18,10 @@ public class TodoService {
 	
 	public List<Todo> findByTitleAndDueDate(String title, LocalDateTime dueDate) {
 		if(dueDate != null) {
-			return this.todoRepository.findByTitleLikeAndDueDateOrderByDueDateDesc(title, dueDate);
+			return this.todoRepository.findByTitleLikeAndDueDateOrderByDueDateAsc(title, dueDate);
 		}else {
-			return this.todoRepository.findByTitleLikeOrderByDueDateDesc(title);
+			return this.todoRepository.findByTitleLikeOrderByDueDateAsc(title);
 		}
-		
 	}
 	
 	public Todo addTodo(String title, String description, LocalDateTime duedate) {
