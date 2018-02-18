@@ -1,0 +1,12 @@
+spring:
+   data:
+      mongodb:
+        host: localhost
+        port: 27017
+        database: todo
+      mongo:
+        repositories:
+          enabled: true
+   jackson:
+       serialization:
+           write_dates_as_timestamps: true
