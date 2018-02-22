@@ -6,6 +6,8 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,8 @@ import com.example.todo.service.TodoService;
 @RequestMapping(value = "/api/v1/todos")
 public class TodoController {
 	
+	protected static final Logger log = LoggerFactory.getLogger(TodoController.class);
+	
 	@Autowired
 	private TodoService todoService;
 	
@@ -33,6 +37,8 @@ public class TodoController {
 	public List<TodoDTO> findByTitleAndDueDate(
 			@RequestParam(required = false, defaultValue= "") String title, 
 			@RequestParam(required = false) Long dueDate) {
+		log.info("Find todos by title({}) and due date({})", title, dueDate);
+		
 		LocalDateTime convertedDuedate = (dueDate != null)? LocalDateTime.ofInstant(Instant.ofEpochMilli(dueDate), ZoneId.systemDefault()): null;
 		return this.todoService
 				.findByTitleAndDueDate(title, convertedDuedate)
@@ -44,10 +50,12 @@ public class TodoController {
 	@PostMapping("/")
 	@ResponseBody
 	public TodoDTO createTodo(@RequestBody TodoReq todoReq) {
+		log.info("Create todo");
+		
 		Todo result = this.todoService.addTodo(
 				todoReq.getTitle(), 
 				todoReq.getDescription(), 
-				LocalDateTime.ofInstant(Instant.ofEpochMilli(todoReq.getDuedate()), ZoneId.systemDefault()));
+				LocalDateTime.ofInstant(Instant.ofEpochMilli(todoReq.getDueDate()), ZoneId.systemDefault()));
 
 		return new TodoDTO(result);
 	}
@@ -55,17 +63,21 @@ public class TodoController {
 	@PutMapping("/{id}")
 	@ResponseBody
 	public TodoDTO updateTodo(@PathVariable String id, @RequestBody TodoReq todoReq) {
+		log.info("Update todo ID({})", id);
+		
 		Todo result = this.todoService.updateTodo(
 				id,
 				todoReq.getTitle(), 
 				todoReq.getDescription(), 
-				LocalDateTime.ofInstant(Instant.ofEpochMilli(todoReq.getDuedate()), ZoneId.systemDefault()));
+				LocalDateTime.ofInstant(Instant.ofEpochMilli(todoReq.getDueDate()), ZoneId.systemDefault()));
 
 		return new TodoDTO(result);
 	}
 	
 	@DeleteMapping("/{id}")
-	public void updateTodo(@PathVariable String id) {
+	public void deleteTodo(@PathVariable String id) {
+		log.info("Delete todo ID({})", id);
+		
 		this.todoService.deleteTodo(id);
 	}
 }

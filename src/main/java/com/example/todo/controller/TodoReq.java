@@ -3,7 +3,7 @@ package com.example.todo.controller;
 public class TodoReq{
 	private String title;
 	private String description;
-	private Long duedate;
+	private Long dueDate;
 	
 	public String getTitle() {
 		return title;
@@ -17,10 +17,11 @@ public class TodoReq{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Long getDuedate() {
-		return duedate;
+	public Long getDueDate() {
+		return dueDate;
 	}
-	public void setDuedate(Long duedate) {
-		this.duedate = duedate;
+	public void setDueDate(Long dueDate) {
+		this.dueDate = dueDate;
 	}
+
 }
